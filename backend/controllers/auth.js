@@ -31,13 +31,13 @@ res.status(200).json({message:"user is register"});
 
 const login = async (req, res) => {
     const { username, password } = req.body
-    if (!username || !email) {
+    if (!username || !password) {
         return res.json({ sucess: false })
     }
     try {
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ username });
         if (!user) {
-            return res.json({ sucess: false });
+            return res.json({ success: false });
         }
         const ismatch = await bcrypt.compare(password, user.password)
         if (!ismatch) {
@@ -63,7 +63,7 @@ const login = async (req, res) => {
 }
 const logout = async (req, res) => {
     try {
-        res.clearCookie('token', token, {
+        res.clearCookie('token',  {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
@@ -74,3 +74,4 @@ const logout = async (req, res) => {
         console.error(error);
     }
 }
+module.exports = {register,login,logout};
