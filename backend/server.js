@@ -6,7 +6,7 @@ const port = 9000;
 const cors = require('cors')
 const cookieparser = require('cookie-parser')
 const authrouter = require('./routes/auth');
-
+const postrouter = require('./routes/posts')
 app.use(express.json())
 app.use(cookieparser());
 app.use(cors());
@@ -22,6 +22,7 @@ const connection = async()=>
 }
 connection();
 app.use('/auth',authrouter);
+app.use('/posts',postrouter)
 app.listen(port,() => {
     console.log(`server is running on port ${port}...`)
 })
