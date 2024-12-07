@@ -1,6 +1,7 @@
 const User = require('../models/User')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const generateTokenAndSetCookie = require('../utils/generateTokenAndSetCookie')
 require('dotenv').config();
 
 const register = async (req, res) => {
@@ -16,13 +17,7 @@ const register = async (req, res) => {
         const hashPassword = await bcrypt.hash(password, 10);
         const user = new User({ username, email, password: hashPassword });
         await user.save();
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
-        res.cookie('token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
-            maxAge: 7 * 24 * 60 * 60 * 1000
-        })
+        generateTokenAndSetCookie(user._id, res);
 res.status(200).json({message:"user is register"});
     } catch (error) {
         console.log(error);
@@ -43,13 +38,8 @@ const login = async (req, res) => {
         if (!ismatch) {
             res.json({ sucess: false, message: "password is not matching" })
         }
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
-        res.cookie('token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
-            maxAge: 7 * 24 * 60 * 60 * 1000
-        })
+        generateTokenAndSetCookie(user._id, res);
+
         res.status(200).json({
 			_id: user._id,
 			username: user.username,
@@ -63,13 +53,8 @@ const login = async (req, res) => {
 }
 const logout = async (req, res) => {
     try {
-        res.clearCookie('token',  {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
-
-        })
-        return res.json({ success: true, message: "user logged out" });
+        res.cookie("jwt", "", { maxAge: 1 });
+		res.status(200).json({ message: "User logged out successfully" });
     } catch (error) {
         console.error(error);
     }

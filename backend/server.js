@@ -7,9 +7,13 @@ const cors = require('cors')
 const cookieparser = require('cookie-parser')
 const authrouter = require('./routes/auth');
 const postrouter = require('./routes/posts')
+const bodyParser = require('body-parser')
 app.use(express.json())
 app.use(cookieparser());
 app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 
 const connection = async()=> 
 {

@@ -7,12 +7,14 @@ const PostSchema = new mongoose.Schema({
     image: {
         type: String,
     },
-    user: {
-        type: String,
+    postedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
         required: true,
     },
     votes: {
-        type: [String],
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: "User",
         default: [],
     },
 },

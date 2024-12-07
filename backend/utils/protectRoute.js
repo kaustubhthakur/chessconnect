@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken')
 const User = require('../models/User')
+const jwt = require('jsonwebtoken')
 require('dotenv').config();
 const protectRoute = async (req, res, next) => {
 	try {
@@ -9,7 +9,7 @@ const protectRoute = async (req, res, next) => {
 
 		const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-		const user = await User.findById(decoded.user).select("-password");
+		const user = await User.findById(decoded.userId).select("-password");
 
 		req.user = user;
 
@@ -20,4 +20,4 @@ const protectRoute = async (req, res, next) => {
 	}
 };
 
-module.exports =  protectRoute;
+module.exports = protectRoute;
