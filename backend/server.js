@@ -8,6 +8,7 @@ const cookieparser = require('cookie-parser')
 const authrouter = require('./routes/auth');
 const postrouter = require('./routes/posts')
 const bodyParser = require('body-parser')
+const userrouter = require('./routes/users')
 app.use(express.json())
 app.use(cookieparser());
 app.use(cors());
@@ -27,6 +28,7 @@ const connection = async()=>
 connection();
 app.use('/auth',authrouter);
 app.use('/posts',postrouter)
+app.use('/users',userrouter)
 app.listen(port,() => {
     console.log(`server is running on port ${port}...`)
 })
