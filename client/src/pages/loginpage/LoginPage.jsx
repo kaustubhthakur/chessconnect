@@ -1,63 +1,65 @@
-import React, { useState } from "react"
-import PasswordInput from "../../components/Input/PasswordInput"
-import { Link, useNavigate } from "react-router-dom"
-import { useDispatch } from "react-redux"
+import React, { useState } from "react";
+import PasswordInput from "../../components/Input/PasswordInput";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import {
   signInFailure,
   signInStart,
   signInSuccess,
-} from "../../redux/userSlice"
-import axios from "axios"
-import { toast } from "react-toastify"
+} from "../../redux/userSlice";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
-  const [username, setUsername] = useState("")  // Changed email to username
-  const [password, setPassword] = useState("")
-  const [error, setError] = useState("")
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    if (!username) {  // Updated validation for username
-      setError("Please enter a valid username")
-      return
+    if (!username) {
+      // Updated validation for username
+      setError("Please enter a valid username");
+      return;
     }
 
     if (!password) {
-      setError("Please enter the password")
-      return
+      setError("Please enter the password");
+      return;
     }
 
-    setError("")
+    setError("");
 
     // Login API
 
     try {
-      dispatch(signInStart())
+      dispatch(signInStart());
 
       const res = await axios.post(
         "http://localhost:9000/auth/login",
-        { username, password },  // Changed email to username
+        { username, password }, // Changed email to username
         { withCredentials: true }
-      )
+      );
 
       if (res.data.success === false) {
-        toast.error(res.data.message)
-        console.log(res.data)
-        dispatch(signInFailure(res.data.message))  // Corrected 'data.message' to 'res.data.message'
+        toast.error(res.data.message);
+        console.log(res.data);
+        dispatch(signInFailure(res.data.message)); // Corrected 'data.message' to 'res.data.message'
       }
 
-      toast.success(res.data.message)
-      dispatch(signInSuccess(res.data))
-      navigate("/")
+      toast.success(res.data.message);
+      dispatch(signInSuccess(res.data));
+      navigate("/");
+      alert("loggedin");
     } catch (error) {
-      toast.error(error.message)
-      dispatch(signInFailure(error.message))
+      toast.error(error.message);
+      dispatch(signInFailure(error.message));
     }
-  }
+  };
 
   return (
     <div className="flex items-center justify-center mt-28">
@@ -67,10 +69,10 @@ const LoginPage = () => {
 
           <input
             type="text"
-            placeholder="Username"  // Updated placeholder to "Username"
+            placeholder="Username" // Updated placeholder to "Username"
             className="input-box"
-            value={username}  // Updated value to username
-            onChange={(e) => setUsername(e.target.value)}  // Updated onChange handler to username
+            value={username} // Updated value to username
+            onChange={(e) => setUsername(e.target.value)} // Updated onChange handler to username
           />
 
           <PasswordInput
@@ -96,7 +98,7 @@ const LoginPage = () => {
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;

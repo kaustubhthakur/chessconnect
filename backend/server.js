@@ -11,7 +11,8 @@ const bodyParser = require('body-parser')
 const userrouter = require('./routes/users')
 app.use(express.json())
 app.use(cookieparser());
-app.use(cors());
+app.use(cors({ origin: ["http://localhost:5173"], credentials: true }))
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
