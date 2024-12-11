@@ -1,10 +1,8 @@
 import React from 'react'
-import {Route,Routes} from "react-router-dom"
+
 const App = () => {
   return (
-    <Routes>
-      <Route/>
-    </Routes>
+    <div>App</div>
   )
 }
 
