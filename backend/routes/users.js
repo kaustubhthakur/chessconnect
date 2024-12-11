@@ -5,5 +5,5 @@ const { getUser,getUsers,followUnFollowUser,updateUser } = require('../controlle
 router.put('/:id/vote',protectRoute,updateUser);
 router.put('/:id/follow',protectRoute,followUnFollowUser)
 router.get('/:id',protectRoute,getUser)
-router.get('/',getUsers)
+router.get('/profile',getUsers)
 module.exports = router;

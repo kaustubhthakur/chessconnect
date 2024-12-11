@@ -40,7 +40,7 @@ const followUnFollowUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
     const { username, email, password, bio } = req.body;
-
+const {profilePic}= req.body;
     const userId = req.user._id;
     try {
         let user = await User.findById(userId);
@@ -53,6 +53,10 @@ const updateUser = async (req, res) => {
             const salt = await bcrypt.genSalt(10);
             const hashedPassword = await bcrypt.hash(password, salt);
             user.password = hashedPassword;
+        }
+        if(profilePic)
+        {
+            user.profilePic = profilePic;
         }
 
 
