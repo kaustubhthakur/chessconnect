@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs')
 const generateTokenAndSetCookie = require('../utils/generateTokenAndSetCookie')
 const register = async (req, res) => {
 	try {
-		const { name, email, username, password } = req.body;
+		const { username, email, password } = req.body;
 		const user = await User.findOne({ $or: [{ email }, { username }] });
 
 		if (user) {
@@ -14,9 +14,8 @@ const register = async (req, res) => {
 		const hashedPassword = await bcrypt.hash(password, salt);
 
 		const newUser = new User({
-			name,
-			email,
 			username,
+			email,
 			password: hashedPassword,
 		});
 		await newUser.save();
@@ -26,18 +25,18 @@ const register = async (req, res) => {
 
 			res.status(201).json({
 				_id: newUser._id,
-				name: newUser.name,
-				email: newUser.email,
 				username: newUser.username,
-				bio: newUser.bio,
+				email: newUser.email,
+				description: newUser.description,
 				profilePic: newUser.profilePic,
+                urls:newUser.urls,
 			});
 		} else {
 			res.status(400).json({ error: "Invalid user data" });
 		}
 	} catch (err) {
 		res.status(500).json({ error: err.message });
-		console.log("Error in signupUser: ", err.message);
+		console.log("Error in register: ", err.message);
 	}
 };
 
@@ -49,20 +48,18 @@ const login = async (req, res) => {
 
 		if (!user || !isPasswordCorrect) return res.status(400).json({ error: "Invalid username or password" });
 
-		if (user.isFrozen) {
-			user.isFrozen = false;
-			await user.save();
-		}
+	
 
 		generateTokenAndSetCookie(user._id, res);
 
 		res.status(200).json({
 			_id: user._id,
-			name: user.name,
+			username: user.username,
 			email: user.email,
 			username: user.username,
-			bio: user.bio,
+			description: user.description,
 			profilePic: user.profilePic,
+            urls:user.urls,
 		});
 	} catch (error) {
 		res.status(500).json({ error: error.message });
