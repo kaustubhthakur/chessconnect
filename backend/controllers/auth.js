@@ -76,3 +76,5 @@ const logout = (req, res) => {
 		console.log("Error in signupUser: ", err.message);
 	}
 };
+
+module.exports = {login,register,logout};
