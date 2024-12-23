@@ -84,4 +84,13 @@ const getUserProfile = async (req, res) => {
 		console.log("Error in getUserProfile: ", err.message);
 	}
 };
-module.exports = {followUnFollowUser,updateUser,getUserProfile}
+const getAllUsers = async(req,res)=> 
+{
+    try {
+        const users = await User.find();
+        res.status(201).json(users);
+    } catch (error) {
+        console.error(error);
+    }
+}
+module.exports = {followUnFollowUser,getAllUsers,updateUser,getUserProfile}
