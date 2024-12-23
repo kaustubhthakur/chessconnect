@@ -2,6 +2,10 @@ const express = require('express')
 const app = express();
 const port = 9000;
 const authrouter= require('./routes/auth')
+const userrouter = require('./routes/users'
+
+)
+const postrouter = require('./routes/posts')
 const cors = require('cors')
 const cookieparser= require('cookie-parser')
 const mongoose = require('mongoose')
@@ -19,6 +23,8 @@ const connection = async()=>
  }   
 }
 app.use('/auth',authrouter);
+app.use('/posts',postrouter)
+app.use('/users',userrouter)
 app.listen(port,() => {
     console.log(
         `server is running on port ${port}...`
