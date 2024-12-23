@@ -14,10 +14,7 @@ const createPost = async (req, res) => {
 
 		if (user._id.toString() !== req.user._id.toString()) {
 			return res.status(401).json({ error: "Unauthorized to create post" });
-		}
-
-	
-		
+		}	
 		const newPost = new Post({ content,image,userId });
 		const savepost = await newPost.save();
 
