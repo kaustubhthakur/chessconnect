@@ -1,0 +1,81 @@
+/* Base styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    font-family: Arial, sans-serif;
+    position: relative;
+    height: 50px;
+  }
+  
+  .navbar-logo a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+  
+  .navbar-links {
+    display: flex;
+    gap: 15px;
+    transition: transform 0.3s ease;
+  }
+  .logo-horse{
+    height: 55px;
+    border-radius: 60px;
+  }
+  .navbar-link {
+    text-decoration: none;
+    color: white;
+    font-size: 1em;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .navbar-link:hover {
+    background-color: #555;
+  }
+  
+  /* Hamburger menu styles */
+  .navbar-hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+  }
+  
+  .hamburger-bar {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    border-radius: 2px;
+  }
+  
+  /* Media query for smaller screens */
+  @media (max-width: 768px) {
+    .navbar-links {
+      flex-direction: column;
+      position: absolute;
+      top: 60px;
+      right: 20px;
+      background-color: #333;
+      padding: 10px;
+      border-radius: 5px;
+      display: none;
+      transform: translateY(-20px);
+    }
+  
+    .navbar-links.active {
+      display: flex;
+      transform: translateY(0);
+    }
+  
+    .navbar-hamburger {
+      display: flex;
+    }
+  }
+  
