@@ -15,7 +15,7 @@ export default function RegisterPage() {
 
   const handleSignup = async () => {
     try {
-      const res = await fetch("/api/users/signup", {
+      const res = await fetch("http://localhost:9000/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -31,6 +31,7 @@ export default function RegisterPage() {
 
       localStorage.setItem("user-threads", JSON.stringify(data));
       setUser(data);
+      alert('loggedin')
       alert("User registered successfully!");
     } catch (error) {
       alert(`Error: ${error.message}`);
