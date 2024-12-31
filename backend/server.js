@@ -9,6 +9,7 @@ const cors = require('cors')
 app.use(express.json())
 app.use(cors())
 app.use(cookieparser())
+app.use(bodyparser());
 const connection = async()=>{
     try {
         await mongoose.connect(process.env.MONGODB);
