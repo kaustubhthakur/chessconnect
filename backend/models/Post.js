@@ -9,13 +9,16 @@ const PostSchema = new mongoose.Schema({
         default: "",
     },
     userId: {
-        type: String,
-        required: true,
+        type: mongoose.Schema.Types.ObjectId,
+			ref: "User",
+			required: true,
     },
-    votes: {
-        type: [String],
-        default: [],
-    },
+    votes:[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+        },
+    ],
 },
 {
     timestamps:true,
