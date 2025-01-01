@@ -17,7 +17,11 @@ const UserSchema = new mongoose.Schema({
         type: [String],
         default: [],
     },
-    friends: {
+    followers: {
+        type: [String],
+        default: [],
+    },
+    following: {
         type: [String],
         default: [],
     },
@@ -31,7 +35,7 @@ const UserSchema = new mongoose.Schema({
     }
 
 },
-{
+    {
         timestamps: true,
-})
+    })
 module.exports = mongoose.model("User", UserSchema);
