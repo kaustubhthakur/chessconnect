@@ -48,14 +48,10 @@ const deletePost = async (req, res) => {
 			return res.status(404).json({ error: "Post not found" });
 		}
 
-		if (post.postedBy.toString() !== req.user._id.toString()) {
+		if (post.userId.toString() !== req.user._id.toString()) {
 			return res.status(401).json({ error: "Unauthorized to delete post" });
 		}
 
-		if (post.img) {
-			const imgId = post.img.split("/").pop().split(".")[0];
-			await cloudinary.uploader.destroy(imgId);
-		}
 
 		await Post.findByIdAndDelete(req.params.id);
 
@@ -76,15 +72,15 @@ const likeUnlikePost = async (req, res) => {
 			return res.status(404).json({ error: "Post not found" });
 		}
 
-		const userLikedPost = post.likes.includes(userId);
+		const userLikedPost = post.votes.includes(userId);
 
 		if (userLikedPost) {
 			// Unlike post
-			await Post.updateOne({ _id: postId }, { $pull: { likes: userId } });
+			await Post.updateOne({ _id: postId }, { $pull: { votes: userId } });
 			res.status(200).json({ message: "Post unliked successfully" });
 		} else {
 			// Like post
-			post.likes.push(userId);
+			post.votes.push(userId);
 			await post.save();
 			res.status(200).json({ message: "Post liked successfully" });
 		}
@@ -92,3 +88,4 @@ const likeUnlikePost = async (req, res) => {
 		res.status(500).json({ error: err.message });
 	}
 };
+module.exports = {createPost,deletePost,getPost,likeUnlikePost}
