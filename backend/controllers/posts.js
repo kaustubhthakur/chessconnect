@@ -88,4 +88,12 @@ const likeUnlikePost = async (req, res) => {
 		res.status(500).json({ error: err.message });
 	}
 };
-module.exports = {createPost,deletePost,getPost,likeUnlikePost}
+const getPosts = async(req,res)=> {
+    try {
+        const posts = await Post.find();
+        res.status(201).json(posts);
+    } catch (error) {
+        console.error(error);
+    }
+}
+module.exports = {createPost,deletePost,getPost,likeUnlikePost, getPosts}
