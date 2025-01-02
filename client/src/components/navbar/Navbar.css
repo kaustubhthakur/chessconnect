@@ -3,6 +3,7 @@ body {
     margin: 0;
     font-family: 'Courier New', Courier, monospace;
     background-color: #f3f3f3;
+ 
   }
   .logo-img{
 height: 60px;
@@ -15,7 +16,7 @@ border-radius: 20px;
     align-items: center;
     padding: 10px 20px;
     background: linear-gradient(90deg, #ff7eb3, #6410a8);
-    border-bottom: 2px solid #120721;
+    border-bottom: 1.5px solid #120721;
   }
   
   .navbar-logo {
@@ -33,7 +34,7 @@ border-radius: 20px;
   .navbar-link {
     text-decoration: none;
     color: #000;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     font-weight: bold;
     text-shadow: 1px 1px #fff;
     transition: color 0.3s ease-in-out;
