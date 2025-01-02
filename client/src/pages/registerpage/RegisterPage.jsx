@@ -12,7 +12,7 @@ const RegisterPage = () => {
   const submitForm = (e) => {
     e.preventDefault();
     fetch("http://localhost:9000/auth/register", {
-      mode: "cors",
+      
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -24,6 +24,7 @@ const RegisterPage = () => {
       })
     }).then((res) => res.json()).then((data) => {
       if (data.success) {
+        alert('registeration success')
         navigate("/login");
       } else {
         setError(data.msg);
