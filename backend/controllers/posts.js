@@ -20,7 +20,7 @@ const createPost = async (req, res) => {
 
         const newPost = new Post({ userId, description, image });
         const savepost = await newPost.save();
-        User.posts.push(savepost);
+        user.posts.push(newPost);
         res.status(201).json(savepost);
     } catch (err) {
         res.status(500).json({ error: err.message });

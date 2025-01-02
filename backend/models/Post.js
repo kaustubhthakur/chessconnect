@@ -6,7 +6,7 @@ const PostSchema = new mongoose.Schema({
     },
     image: {
         type: String,
-        default: "",
+       required:true,
     },
     userId: {
         type: mongoose.Schema.Types.ObjectId,

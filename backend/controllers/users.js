@@ -1,4 +1,13 @@
 const User = require('../models/User')
+const mongoose = require('mongoose')
+const getUsers = async(req,res)=> {
+	try {
+		const users = await User.find();
+		res.status(201).json(users);
+	} catch (error) {
+		console.error(error);
+	}
+}
 const getUserProfile = async (req, res) => {
 	// We will fetch user profile either with username or userId
 	// query is either username or userId
@@ -93,4 +102,4 @@ const updateUser = async (req, res) => {
 		console.log("Error in updateUser: ", err.message);
 	}
 };
-module.exports = {updateUser,getUserProfile,followUnFollowUser}
+module.exports = {getUsers, updateUser,getUserProfile,followUnFollowUser}
