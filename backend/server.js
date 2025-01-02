@@ -12,7 +12,7 @@ const usersrouter = require('./routes/users')
 app.use(express.json())
 app.use(cors())
 app.use(cookieparser())
-app.use(bodyParser());
+
 const connection = async () => {
     try {
         await mongoose.connect(process.env.MONGODB);
