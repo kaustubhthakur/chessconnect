@@ -1,66 +1,96 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { useSetRecoilState } from "recoil";
+import authScreenAtom from "../../atoms/authScreenAtom";
+import userAtom from "../../atoms/userAtom";
+import "./RegisterPage.css"; // Importing CSS file
 
-const RegisterPage = () => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [pwd, setPwd] = useState("");
-  const [error, setError] = useState("");
+export default function RegisterPage() {
+  const [showPassword, setShowPassword] = useState(false);
+  const setAuthScreen = useSetRecoilState(authScreenAtom);
+  const [inputs, setInputs] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
 
-  const navigate = useNavigate();
+  const setUser = useSetRecoilState(userAtom);
 
-  const submitForm = (e) => {
-    e.preventDefault();
-    fetch("http://localhost:9000/auth/register", {
-      
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        username: username,
-        email: email,
-        password: pwd
-      })
-    }).then((res) => res.json()).then((data) => {
-      if (data.success) {
-        alert('registeration success')
-        navigate("/login");
-      } else {
-        setError(data.msg);
+  const handleSignup = async () => {
+    try {
+      const res = await fetch("http://localhost:9000/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(inputs),
+      });
+      const data = await res.json();
+
+      if (data.error) {
+        console.error("Signup Error:", data.error);
+        return;
       }
-    });
+
+      localStorage.setItem("user-threads", JSON.stringify(data));
+      setUser(data);
+      alert('registered')
+    } catch (error) {
+      console.error("Signup Error:", error);
+    }
   };
 
   return (
-    <>
-      <div className="con flex flex-col items-center justify-center h-screen bg-[#070707]">
-        <form onSubmit={submitForm} className='w-[26vw] min-h-[auto] bg-[#0f0e0e] rounded-2xl p-5 flex flex-col items-center'>
-          <div className='w-full'>
-            <p className='text-[gray] text-[14px] mt-3'>Username</p>
-            <div className="inputBox">
-              <input onChange={(e) => { setUsername(e.target.value) }} value={username} type="text" placeholder='Username' required />
-            </div>
-
-            <p className='text-[gray] text-[14px] mt-3'>Email</p>
-            <div className="inputBox">
-              <input onChange={(e) => { setEmail(e.target.value) }} value={email} type="email" placeholder='Email' required />
-            </div>
-
-            <p className='text-[gray] text-[14px] mt-3'>Password</p>
-            <div className="inputBox">
-              <input onChange={(e) => { setPwd(e.target.value) }} value={pwd} type="password" placeholder='Password' required />
-            </div>
-
-            <p className='text-[14px] text-[gray] mt-3'>Already have an account <Link to="/login" className='text-purple-600'>Login</Link></p>
-
-            <p className='text-[14px] text-red-500 mt-1 mb-3'>{error}</p>
-            <button className="btnNormal w-full">Register</button>
+    <div className="register-container">
+      <div className="register-card">
+        <h2 className="register-heading">Register</h2>
+        <div className="form-group">
+          <label>Username</label>
+          <input
+            type="text"
+            placeholder="Enter your username"
+            value={inputs.username}
+            onChange={(e) => setInputs({ ...inputs, username: e.target.value })}
+          />
+        </div>
+        <div className="form-group">
+          <label>Email</label>
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={inputs.email}
+            onChange={(e) => setInputs({ ...inputs, email: e.target.value })}
+          />
+        </div>
+        <div className="form-group">
+          <label>Password</label>
+          <div className="password-input">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Enter your password"
+              value={inputs.password}
+              onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
+            />
+            <button
+              className="toggle-password"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? "Hide" : "Show"}
+            </button>
           </div>
-        </form>
+        </div>
+        <button className="register-button" onClick={handleSignup}>
+          Register
+        </button>
+        <p className="register-footer">
+          Already have an account?{" "}
+          <span
+            className="login-link"
+            onClick={() => setAuthScreen("login")}
+          >
+            Login
+          </span>
+        </p>
       </div>
-    </>
+    </div>
   );
-};
-
-export default RegisterPage;
+}
