@@ -4,6 +4,7 @@ import HomePage from './pages/homepage/HomePage'
 import RegisterPage from './pages/registerpage/RegisterPage'
 import LoginPage from './pages/loginpage/LoginPage'
 import CreatePost from './components/createpost/CreatePost'
+import ProfilePage from './components/profile/ProfilePage'
 const App = () => {
   return (
     <Routes>
@@ -11,6 +12,7 @@ const App = () => {
       <Route path='/register' element={<RegisterPage/>} />
       <Route path='/login' element={<LoginPage/>}/>
       <Route path='/createpost' element={<CreatePost/>} />
+      <Route path='/profile' element={<ProfilePage/>} />
     </Routes>
   )
 }
