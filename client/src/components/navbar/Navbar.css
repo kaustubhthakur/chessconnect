@@ -84,13 +84,12 @@ border-radius: 20px;
   border: none;
 }
 
-/* Logout button */
+
 .navbar-button.logout {
   background-color: #DC3545;
   color: white;
   border-radius: 5px;
 }
-
 .navbar-button.logout:hover {
   background-color: #c82333;
 }
