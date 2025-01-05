@@ -1,0 +1,115 @@
+.create-post-button {
+    position: fixed;
+    bottom: 10px;
+    right: 5px;
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .create-post-modal {
+    display: none;
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    width: 90%;
+    max-width: 500px;
+  }
+  
+  .create-post-modal h2 {
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+  
+  .post-textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 1em;
+    margin-bottom: 10px;
+  }
+  
+  .remaining-char {
+    text-align: right;
+    font-size: 12px;
+    color: #777;
+  }
+  
+  .select-image-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .select-image-button:hover {
+    background-color: #218838;
+  }
+  
+  .image-preview {
+    position: relative;
+    margin-top: 10px;
+  }
+  
+  .selected-image {
+    width: 100%;
+    border-radius: 5px;
+  }
+  
+  .remove-image-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: #000;
+    color: #fff;
+    border-radius: 50%;
+    padding: 5px;
+    cursor: pointer;
+  }
+  
+  .modal-footer {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .post-submit-button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+  }
+  
+  .post-submit-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .cancel-button {
+    padding: 10px 20px;
+    background-color: #DC3545;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+  }
+  
+  .cancel-button:hover {
+    background-color: #c82333;
+  }
+  
