@@ -1,13 +1,16 @@
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import authScreenAtom from "../../atoms/authScreenAtom";
 import userAtom from "../../atoms/userAtom";
+import "./LoginPage.css";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const setAuthScreen = useSetRecoilState(authScreenAtom);
   const setUser = useSetRecoilState(userAtom);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate(); // Initialize useNavigate hook
 
   const [inputs, setInputs] = useState({
     username: "",
@@ -31,7 +34,8 @@ export default function LoginPage() {
       }
       localStorage.setItem("user-threads", JSON.stringify(data));
       setUser(data);
-      alert('loggedin')
+      alert("Logged in successfully!");
+      navigate("/"); // Navigate to the homepage
     } catch (error) {
       alert(`Error: ${error.message}`);
     } finally {
@@ -82,11 +86,8 @@ export default function LoginPage() {
         </button>
         <p className="login-footer">
           Don&apos;t have an account?{" "}
-          <span
-            className="signup-link"
-            onClick={() => setAuthScreen("signup")}
-          >
-            Sign up
+          <span className="signup-link">
+            <Link to="/register">Register</Link>
           </span>
         </p>
       </div>

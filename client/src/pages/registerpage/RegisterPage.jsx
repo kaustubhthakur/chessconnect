@@ -3,7 +3,7 @@ import { useSetRecoilState } from "recoil";
 import authScreenAtom from "../../atoms/authScreenAtom";
 import userAtom from "../../atoms/userAtom";
 import "./RegisterPage.css"; // Importing CSS file
-
+import {Link} from "react-router-dom"
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const setAuthScreen = useSetRecoilState(authScreenAtom);
@@ -33,7 +33,7 @@ export default function RegisterPage() {
 
       localStorage.setItem("user-threads", JSON.stringify(data));
       setUser(data);
-      alert('registered')
+      alert("registered");
     } catch (error) {
       console.error("Signup Error:", error);
     }
@@ -68,7 +68,9 @@ export default function RegisterPage() {
               type={showPassword ? "text" : "password"}
               placeholder="Enter your password"
               value={inputs.password}
-              onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
+              onChange={(e) =>
+                setInputs({ ...inputs, password: e.target.value })
+              }
             />
             <button
               className="toggle-password"
@@ -83,11 +85,8 @@ export default function RegisterPage() {
         </button>
         <p className="register-footer">
           Already have an account?{" "}
-          <span
-            className="login-link"
-            onClick={() => setAuthScreen("login")}
-          >
-            Login
+          <span className="login-link">
+            <Link to='/login'>Login</Link>
           </span>
         </p>
       </div>
