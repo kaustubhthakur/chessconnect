@@ -60,7 +60,41 @@ border-radius: 20px;
     background-color: #000;
     transition: transform 0.3s ease-in-out;
   }
-  
+  /* Navbar button styles */
+.navbar-button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 14px;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+.navbar-button:hover {
+  background-color: #0056b3;
+}
+
+/* Profile and Username display */
+.navbar-button.username {
+  background-color: transparent;
+  color: #333;
+  border: none;
+}
+
+/* Logout button */
+.navbar-button.logout {
+  background-color: #DC3545;
+  color: white;
+  border-radius: 5px;
+}
+
+.navbar-button.logout:hover {
+  background-color: #c82333;
+}
+
   /* Responsive styles */
   @media (max-width: 768px) {
     .navbar-links {
