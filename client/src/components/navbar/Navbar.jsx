@@ -28,6 +28,7 @@ const handleLogout = () => {
             </button>
           
   </>
+  
 ):(
   <>
           <a href="/login" className="navbar-link">Login</a>
