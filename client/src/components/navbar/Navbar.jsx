@@ -19,14 +19,14 @@ const handleLogout = () => {
       <div className={`navbar-links ${isMenuOpen ? 'open' : ''}`}>
 {user ?(
   <>
-   <>
-            <button className="navbar-button">Create Post</button>
-            <button className="navbar-button">Profile</button>
-            <div>{user.username}</div>
+   
+            <div className="navbar-button">Create Post</div>
+            <div className="navbar-button">Profile</div>
+            <div className='navbar-button'>{user.username}</div>
             <button className="navbar-button logout" onClick={handleLogout}>
               Logout
             </button>
-          </>
+          
   </>
 ):(
   <>

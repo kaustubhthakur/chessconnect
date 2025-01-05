@@ -1,88 +1,150 @@
-/* Navbar.css */
-
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #333;
-  color: #fff;
-  padding: 10px 20px;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  z-index: 1000;
-}
-
-.navbar-logo img {
-  height: 40px;
-}
-
-.navbar-links {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  list-style: none;
-  transition: transform 0.3s ease;
-}
-
-.navbar-links a {
-  color: #fff;
-  text-decoration: none;
-  font-size: 16px;
-  transition: color 0.2s ease;
-}
-
-.navbar-links a:hover {
-  color: #00bcd4;
-}
-
-.logout-btn {
-  background-color: #ff1744;
-  color: #fff;
-  border: none;
-  padding: 8px 16px;
-  cursor: pointer;
-  font-size: 14px;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-}
-
-.logout-btn:hover {
-  background-color: #d50000;
-}
-
-.menu-icon {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  cursor: pointer;
-}
-
-.menu-icon .bar {
-  width: 25px;
-  height: 3px;
-  background-color: #fff;
-}
-
-@media (max-width: 768px) {
-  .navbar-links {
-    position: absolute;
-    top: 60px;
-    right: 0;
-    background-color: #444;
-    flex-direction: column;
-    gap: 10px;
-    padding: 15px;
-    transform: translateX(100%);
-    width: 200px;
-    box-shadow: -2px 2px 10px rgba(0, 0, 0, 0.5);
+/* Base styles */
+body {
+    margin: 0;
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #f3f3f3;
+ 
   }
-
-  .navbar-links.open {
-    transform: translateX(0);
+  .logo-img{
+height: 60px;
+width: 60px;
+border-radius: 20px;
   }
-
-  .menu-icon {
+  .navbar {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: linear-gradient(90deg, #ff7eb3, #6410a8);
+    border-bottom: 1.5px solid #120721;
   }
+  
+  .navbar-logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #000;
+    text-shadow: 2px 2px #fff;
+  }
+  
+  .navbar-links {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .navbar-link {
+    text-decoration: none;
+    color: #000;
+    font-size: 1.4rem;
+    font-weight: bold;
+    text-shadow: 1px 1px #fff;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .navbar-link:hover {
+    color: #fff;
+  }
+  
+  /* Hamburger menu styles */
+  .hamburger-menu {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .hamburger-menu .line {
+    width: 25px;
+    height: 3px;
+    background-color: #000;
+    transition: transform 0.3s ease-in-out;
+  }
+  /* Styling for navbar button container */
+.navbar-button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 0 10px;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #ffffff;
+  background-color: #00ff00; /* Neon green */
+  border: 2px solid #00ff00;
+  border-radius: 30px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  font-family: 'Comic Sans MS', cursive, sans-serif;
 }
+
+.navbar-button:hover {
+  background-color: #ff00ff; /* Neon pink on hover */
+  border-color: #ff00ff;
+  transform: scale(1.1);
+}
+
+.navbar-button:active {
+  transform: scale(0.95);
+}
+
+/* Styling for logout button with a unique color */
+.navbar-button.logout {
+  background-color: #ff0000; /* Neon red */
+  border-color: #ff0000;
+}
+
+.navbar-button.logout:hover {
+  background-color: #00ffff; /* Neon cyan on hover */
+  border-color: #00ffff;
+}
+
+/* Styling for user username */
+.navbar-username {
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  margin-left: 15px;
+}
+
+/* Optional: Align the buttons and username in a row */
+.navbar-buttons-container {
+  display: flex;
+  align-items: center;
+}
+
+
+
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .navbar-buttons-container {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .navbar-button {
+      margin: 10px 0;
+      width: 100%;
+    }
+    .navbar-links {
+      display: none;
+      position: absolute;
+      top: 50px;
+      right: 20px;
+      flex-direction: column;
+      background-color: #ff7eb3;
+      border: 2px solid #000;
+      padding: 10px;
+      gap: 10px;
+      z-index: 10;
+    }
+  
+    .navbar-links.open {
+      display: flex;
+    }
+  
+    .hamburger-menu {
+      display: flex;
+    }
+  }
+  
