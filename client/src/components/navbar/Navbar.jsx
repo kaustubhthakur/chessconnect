@@ -20,15 +20,15 @@ const handleLogout = () => {
 {user ?(
   <>
    
-            <div className="navbar-button">Create Post</div>
-            <div className="navbar-button">Profile</div>
+            <a href='/createpost' className="navbar-button">Create Post</a>
+            <a href='/profile' className="navbar-button">Profile</a>
             <div className='navbar-button'>{user.username}</div>
             <button className="navbar-button logout" onClick={handleLogout}>
               Logout
             </button>
           
   </>
-  
+
 ):(
   <>
           <a href="/login" className="navbar-link">Login</a>

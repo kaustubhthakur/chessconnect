@@ -60,72 +60,9 @@ border-radius: 20px;
     background-color: #000;
     transition: transform 0.3s ease-in-out;
   }
-  /* Styling for navbar button container */
-.navbar-button {
-  display: inline-block;
-  padding: 10px 20px;
-  margin: 0 10px;
-  font-size: 16px;
-  font-weight: bold;
-  text-transform: uppercase;
-  color: #ffffff;
-  background-color: #00ff00; /* Neon green */
-  border: 2px solid #00ff00;
-  border-radius: 30px;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-  font-family: 'Comic Sans MS', cursive, sans-serif;
-}
-
-.navbar-button:hover {
-  background-color: #ff00ff; /* Neon pink on hover */
-  border-color: #ff00ff;
-  transform: scale(1.1);
-}
-
-.navbar-button:active {
-  transform: scale(0.95);
-}
-
-/* Styling for logout button with a unique color */
-.navbar-button.logout {
-  background-color: #ff0000; /* Neon red */
-  border-color: #ff0000;
-}
-
-.navbar-button.logout:hover {
-  background-color: #00ffff; /* Neon cyan on hover */
-  border-color: #00ffff;
-}
-
-/* Styling for user username */
-.navbar-username {
-  color: #fff;
-  font-size: 16px;
-  font-weight: bold;
-  margin-left: 15px;
-}
-
-/* Optional: Align the buttons and username in a row */
-.navbar-buttons-container {
-  display: flex;
-  align-items: center;
-}
-
-
-
+  
   /* Responsive styles */
   @media (max-width: 768px) {
-    .navbar-buttons-container {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  
-    .navbar-button {
-      margin: 10px 0;
-      width: 100%;
-    }
     .navbar-links {
       display: none;
       position: absolute;
