@@ -1,72 +1,88 @@
-import React, { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
-import userAtom from "../../atoms/userAtom";
-import "./ProfilePage.css"; // Import the CSS for styling
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import postsAtom from "../../atoms/postsAtom";
 
 const ProfilePage = () => {
-  const user = useRecoilValue(userAtom); // Get the logged-in user info from Recoil state
-  const [profileData, setProfileData] = useState(null); // State to store profile data
-  const [loading, setLoading] = useState(true); // Loading state for data fetching
-  const [error, setError] = useState(null); // Error state for handling API failures
+  const { username } = useParams();
+  const [posts, setPosts] = useRecoilState(postsAtom);
+  const [fetchingPosts, setFetchingPosts] = useState(true);
+  const [user, setUser] = useState(null); // State for storing user info
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchProfileData = async () => {
+    const getUserProfile = async () => {
       try {
-        const res = await fetch(`http://localhost:9000/users/profile/${user._id}`, {
-          headers: {
-            "Authorization": `Bearer ${user.token}`,
-          },
-        });
-        
+        const res = await fetch(`http://localhost:9000/users/profile/${username}`);
         const data = await res.json();
-        
         if (data.error) {
-          setError(data.error);
+          alert("Error: " + data.error);
         } else {
-          setProfileData(data);
+          setUser(data);
         }
       } catch (error) {
-        setError("Error fetching profile data.");
+        alert("Error fetching user profile: " + error.message);
       } finally {
         setLoading(false);
       }
     };
 
-    if (user) {
-      fetchProfileData();
-    }
-  }, [user]);
+    getUserProfile();
+  }, [username]);
 
-  if (loading) {
-    return <div>Loading...</div>;
+  useEffect(() => {
+    const getPosts = async () => {
+      if (!user) return;
+      setFetchingPosts(true);
+      try {
+        const res = await fetch(`/api/posts/user/${username}`);
+        const data = await res.json();
+        setPosts(data);
+      } catch (error) {
+        alert("Error fetching posts: " + error.message);
+        setPosts([]);
+      } finally {
+        setFetchingPosts(false);
+      }
+    };
+
+    getPosts();
+  }, [username, user, setPosts]);
+
+  if (!user && loading) {
+    return (
+      <div className="loading-container">
+        <div className="spinner"></div>
+      </div>
+    );
   }
 
-  if (error) {
-    return <div>{error}</div>;
-  }
+  if (!user && !loading) return <h1>User not found</h1>;
 
   return (
     <div className="profile-page">
-      <div className="profile-header">
-        <img
-          src={profileData.profilePic || "/default-profile.png"}
-          alt="Profile"
-          className="profile-pic"
-        />
-        <div className="profile-info">
-          <h2>{profileData.username}</h2>
-          <p>{profileData.bio || "No bio available."}</p>
-          <p>Email: {profileData.email}</p>
-          <div className="followers-following">
-            <span>{profileData.followers.length} Followers</span>
-            <span>{profileData.following.length} Following</span>
-          </div>
-        </div>
-      </div>
+      <h1>{user.username}'s Profile</h1>
+      <p>Email: {user.email}</p>
+      {user.profilePic && <img src={user.profilePic} alt="Profile" />}
+      <p>Bio: {user.bio}</p>
+      <p>Followers: {user.followers.length}</p>
+      <p>Following: {user.following.length}</p>
 
-      <div className="profile-posts">
-        <h3>Posts</h3>
-        {/* Render posts here if needed */}
+      {!fetchingPosts && posts.length === 0 && <h1>User has no posts.</h1>}
+      {fetchingPosts && (
+        <div className="loading-container">
+          <div className="spinner"></div>
+        </div>
+      )}
+
+      {/* Display posts here, if necessary */}
+      <div>
+        {posts.length > 0 && posts.map((post) => (
+          <div key={post._id}>
+            <h2>{post.title}</h2>
+            <p>{post.content}</p>
+          </div>
+        ))}
       </div>
     </div>
   );
