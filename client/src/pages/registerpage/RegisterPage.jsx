@@ -1,55 +1,100 @@
-import { Link, useNavigate } from "react-router-dom"
-import "./RegisterPage.css"
-import { useState } from "react"
-import axios from 'axios'
-const RegisterPage = () => {
-    const [username,setUsername]=useState("")
-    const [email,setEmail]=useState("")
-    const [password,setPassword]=useState("")
-    const [error,setError]=useState(false)
-    const navigate=useNavigate()
-    const handleRegister=async ()=>{
-    
-        try{
-          const res=await axios.post("http://localhost:9000/auth/register",{username,email,password})
-          setUsername(res.data.username)
-          setEmail(res.data.email)
-          setPassword(res.data.password)
-          setError(false)
-          navigate("/login")
-          alert("registered!!!!!!!")
-          
-        }
-        catch(err){
-          setError(true)
-          console.log(err)
-        }
-    
-      }
-    
-  return (
-    <>
-      <div className="flex items-center justify-between px-6 md:px-[200px] py-4">
+import React, { useState } from "react";
+import { useSetRecoilState } from "recoil";
+import authScreenAtom from "../atoms/authAtom";
+import userAtom from "../atoms/userAtom";
 
-  
-    </div>
-    <div className="w-full flex justify-center items-center h-[80vh] ">
-       <div className="flex flex-col justify-center items-center space-y-4 w-[80%] md:w-[25%]">
+export default function RegisterPage() {
+	const [showPassword, setShowPassword] = useState(false);
+	const setAuthScreen = useSetRecoilState(authScreenAtom);
+	const [inputs, setInputs] = useState({
+		username: "",
+		email: "",
+		password: "",
+	});
 
-         <input onChange={(e)=>setUsername(e.target.value)} className="w-full px-4 py-2 border-2 border-black outline-0" type="text" placeholder="Enter your username" />
-         <input onChange={(e)=>setEmail(e.target.value)} className="w-full px-4 py-2 border-2 border-black outline-0" type="text" placeholder="Enter your email" />
-         <input onChange={(e)=>setPassword(e.target.value)} className="w-full px-4 py-2 border-2 border-black outline-0" type="password" placeholder="Enter your password" />
-         <button onClick={handleRegister} className="w-full px-4 py-4 text-lg font-bold text-white bg-black rounded-lg hover:bg-gray-500 hover:text-black ">Register</button>
-         {error && <h3 className="text-red-500 text-sm ">Something went wrong</h3>}
-         <div className="flex justify-center items-center space-x-3">
-          <p>Already have an account?</p>
-          <p className="text-gray-500 hover:text-black"><Link to="/login">Login</Link></p>
-         </div>
-       </div>
-    </div>
+	const setUser = useSetRecoilState(userAtom);
 
-    </>
-  )
+	const handleRegister = async () => {
+		try {
+			const res = await fetch("/api/users/signup", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(inputs),
+			});
+			const data = await res.json();
+
+			if (data.error) {
+				alert(`Error: ${data.error}`);
+				return;
+			}
+
+			localStorage.setItem("user-threads", JSON.stringify(data));
+			setUser(data);
+            alert('registered!!')
+		} catch (error) {
+			alert(`Error: ${error.message}`);
+		}
+	};
+
+	return (
+		<div className="register-container">
+			<div className="register-card">
+				<h1 className="register-heading">Register</h1>
+				<div className="form-group">
+					<label>Username</label>
+					<input
+						type="text"
+						onChange={(e) => setInputs({ ...inputs, username: e.target.value })}
+						value={inputs.username}
+						required
+					/>
+				</div>
+				<div className="form-group">
+					<label>Email Address</label>
+					<input
+						type="email"
+						onChange={(e) => setInputs({ ...inputs, email: e.target.value })}
+						value={inputs.email}
+						required
+					/>
+				</div>
+				<div className="form-group">
+					<label>Password</label>
+					<div className="password-group">
+						<input
+							type={showPassword ? "text" : "password"}
+							onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
+							value={inputs.password}
+							required
+						/>
+						<button
+							type="button"
+							className="toggle-password"
+							onClick={() => setShowPassword((prev) => !prev)}
+						>
+							{showPassword ? "Hide" : "Show"}
+						</button>
+					</div>
+				</div>
+				<div className="form-actions">
+					<button onClick={handleRegister} className="register-button">
+						Register
+					</button>
+				</div>
+				<div className="form-footer">
+					<p>
+						Already have an account?{" "}
+						<span
+							className="login-link"
+							onClick={() => setAuthScreen("login")}
+						>
+							Login
+						</span>
+					</p>
+				</div>
+			</div>
+		</div>
+	);
 }
-
-export default RegisterPage
