@@ -3,7 +3,7 @@ const app = express();
 const port = 9000;
 const mongoose = require('mongoose')
 require('dotenv').config();
-const bodyParser = require('body-parser')
+
 const cookieparser = require('cookie-parser')
 const cors = require('cors')
 const authrouter = require('./routes/auth')

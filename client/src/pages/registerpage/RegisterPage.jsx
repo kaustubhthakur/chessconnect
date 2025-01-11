@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useSetRecoilState } from "recoil";
-import authScreenAtom from "../atoms/authAtom";
-import userAtom from "../atoms/userAtom";
+import authScreenAtom from "../../atoms/authAtom";
+import userAtom from "../../atoms/userAtom";
+import './RegisterPage.css';
 
 export default function RegisterPage() {
 	const [showPassword, setShowPassword] = useState(false);
@@ -16,7 +17,7 @@ export default function RegisterPage() {
 
 	const handleRegister = async () => {
 		try {
-			const res = await fetch("/api/users/signup", {
+			const res = await fetch("http://localhost:9000/auth/register", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
