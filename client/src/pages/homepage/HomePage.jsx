@@ -4,10 +4,7 @@ import Navbar from '../../components/navbar/Navbar'
 const HomePage = () => {
   return (
     <div>
-      
-      
-      
-      hjkkhhhhhhhhhhhhhhhhhh  hello jerry
+    <Navbar/>
     </div>
   )
 }
